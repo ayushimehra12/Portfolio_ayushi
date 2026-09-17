@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karo — a lighter board</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">K</span><span>Karo</span><span class="chevron">⌄</span></div>
+      <div class="topbar-note">Content is user-generated and unverified.</div>
+      <div class="top-actions">
+        <button class="avatar avatar-purple" id="profileBtn" title="Your profile">A</button>
+        <button class="icon-btn" id="presenceBtn" title="People on this board">◧⌄</button>
+        <button class="share-btn" id="shareBtn">⇧&nbsp; Share</button>
+      </div>
+    </header>
+
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="sidebar-title">Boards</div>
+        <div id="boardList"></div>
+        <button class="side-action" id="newBoardBtn">＋&nbsp; New board</button>
+        <button class="side-action muted" id="templateBtn">☆&nbsp; Save as template</button>
+        <div class="sidebar-footer">A lighter kanban.<br>Data syncs across browsers when connected.</div>
+      </aside>
+
+      <main class="main">
+        <div class="crumb">Boards</div>
+        <div class="board-header">
+          <h1 id="boardName">Sam &amp; Ayushi</h1>
+          <div class="toolbar">
+            <label class="search"><span>⌕</span><input id="searchInput" placeholder="Search cards" /></label>
+            <div class="people" id="people"></div>
+            <button class="add-person" id="addPersonBtn">＋</button>
+            <select id="groupBy" class="select"><option value="none">Group by: None</option><option value="assignee">Group by: Assignee</option><option value="priority">Group by: Priority</option><option value="tag">Group by: Tag</option></select>
+            <button class="export" id="exportBtn">↓&nbsp; Export <span>⌄</span></button>
+            <button class="theme-btn" id="themeBtn" title="Toggle theme">◐</button>
+            <div class="you">you: <input id="userName" value="name" aria-label="Your name" /></div>
+          </div>
+        </div>
+
+        <section class="board-scroll" id="boardScroll">
+          <div id="board" class="board"></div>
+          <button class="add-column" id="addColumnBtn">＋ Add column</button>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="modalBackdrop">
+    <div class="modal" role="dialog" aria-modal="true">
+      <button class="modal-close" id="modalClose">×</button>
+      <h2 id="modalTitle">Add card</h2>
+      <form id="cardForm">
+        <input type="hidden" id="cardId" />
+        <label>Title<input id="cardTitle" required maxlength="120" placeholder="What needs to happen?" /></label>
+        <div class="form-row">
+          <label>Tag<select id="cardTag"><option>Planning</option><option>Build</option><option>Design</option><option>Research</option><option>Ops</option></select></label>
+          <label>Priority<select id="cardPriority"><option>Low</option><option>Medium</option><option>High</option></select></label>
+        </div>
+        <div class="form-row">
+          <label>Points<input id="cardPoints" type="number" min="0" max="100" value="3" /></label>
+          <label>Assignee<input id="cardAssignee" maxlength="20" placeholder="AY" /></label>
+        </div>
+        <label>Column<select id="cardColumn"></select></label>
+        <button class="primary" type="submit">Save card</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
